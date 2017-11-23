@@ -1,36 +1,39 @@
 language: php
 sudo: false
 
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+    - $HOME/symfony-bridge/.phpunit
+
 env:
   global:
-    - SYMFONY_VERSION=""
-
+    - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
 
 matrix:
   fast_finish: true
   include:
-    - php: 5.4
-      env: SYMFONY_VERSION="2.7.x"
-    - php: 5.5
-    - php: 5.6
-      env: SYMFONY_VERSION="2.8.x"
-    - php: hhvm
-    - php: nightly
-  allow_failures:
-    - php: hhvm
-    - php: nightly
+    - php: 7.1
 
 before_install:
+  - phpenv config-rm xdebug.ini
   - composer self-update
-  - if [ "$SYMFONY_VERSION" != "" ]; then composer require --dev --no-update symfony/symfony:$SYMFONY_VERSION; fi
 
 install:
-  - composer install -n
-
-before_script:
-  - php app/console doctrine:schema:create -n --env test
-  - php app/console doctrine:fixtures:load -n --env test
+  - composer install
+  - ./vendor/bin/simple-phpunit install
 
 script:
-  - php bin/codecept run -c src/AppBundle/
-  
+  - ./vendor/bin/simple-phpunit
+  # this checks that the source code follows the Symfony Code Syntax rules
+  - ./vendor/bin/php-cs-fixer fix --diff --dry-run -v
+  # this checks that the YAML config files contain no syntax errors
+  - ./bin/console lint:yaml config
+  # this checks that the Twig template files contain no syntax errors
+  - ./bin/console lint:twig templates
+  # this checks that the XLIFF translations contain no syntax errors
+  - ./bin/console lint:xliff config/translations
+  # this checks that the application doesn't use dependencies with known security vulnerabilities
+  - ./bin/console security:check --end-point=http://security.sensiolabs.org/check_lock
+  # this checks that the composer.json and composer.lock files are valid
+  - composer validate --strict

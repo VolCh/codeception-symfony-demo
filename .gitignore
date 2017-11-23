@@ -1,11 +1,38 @@
-/app/bootstrap.php.cache
-/app/cache/*
-/app/logs/*
-!app/cache/.gitkeep
-!app/logs/.gitkeep
 /build/
+/node_modules/
+/var/*
+!/var/cache
+/var/cache/*
+!var/cache/.gitkeep
+!/var/data
+!/var/log
+/var/log/*
+!var/log/.gitkeep
+!/var/sessions
+/var/sessions/*
+!var/sessions/.gitkeep
+!var/SymfonyRequirements.php
+/public/build/fonts/glyphicons-*
+/public/build/images/glyphicons-*
+
+###> symfony/framework-bundle ###
+.env
+/public/bundles/
+/var/
 /vendor/
-/bin/
-/composer.phar
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/web-server-bundle ###
+.web-server-pid
+###< symfony/web-server-bundle ###
+
+###> friendsofphp/php-cs-fixer ###
+.php_cs
+.php_cs.cache
+###< friendsofphp/php-cs-fixer ###
 
 tests/_output/*
