@@ -15,6 +15,7 @@ $finder = PhpCsFixer\Finder::create()
     ->exclude('var')
     ->exclude('public/bundles')
     ->exclude('public/build')
+    ->exclude('tests') // Codeception & Symfony coding standards are different
 ;
 
 return PhpCsFixer\Config::create()
