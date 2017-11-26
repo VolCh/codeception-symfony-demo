@@ -1,16 +1,11 @@
 <?php use App\Tests\FunctionalTester;
 $I = new FunctionalTester($scenario);
 $I->am('Anonymous');
+$I->wantTo('open blog post 1 by slug and see title');
 
-/** @var \Doctrine\ORM\EntityManager $em */
-$em = $I->grabService('doctrine');
-/** @var \App\Repository\PostRepository $repository */
-$repository = $em->getRepository(\App\Entity\Post::class);
 /** @var \App\Entity\Post $blogPost */
-$blogPost = $repository->find(1);
+$blogPost = $I->grabEntityFromRepository(\App\Entity\Post::class, ['id' => 1]);
 $url = sprintf('/en/blog/posts/%s', $blogPost->getSlug());
-
-$I->wantTo('open blog post by slug and see result');
 
 $I->amOnPage($url);
 $I->seeResponseCodeIs(200);
