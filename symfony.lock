@@ -11,11 +11,20 @@
             "ref": "d2a29c0abee586aff913fd45fae1f59b669f4cbe"
         }
     },
+    "codeception/phpunit-wrapper": {
+        "version": "7.1.4"
+    },
+    "codeception/stub": {
+        "version": "1.0.4"
+    },
     "composer/ca-bundle": {
         "version": "1.0.8"
     },
     "composer/semver": {
         "version": "1.4.2"
+    },
+    "composer/xdebug-handler": {
+        "version": "1.1.0"
     },
     "dama/doctrine-test-bundle": {
         "version": "v4.0.1"
@@ -103,9 +112,6 @@
             "version": "2.2",
             "ref": "9d60c231a92e69c68b89897813ec4931d0697b1f"
         }
-    },
-    "gecko-packages/gecko-php-unit": {
-        "version": "v2.2"
     },
     "guzzlehttp/guzzle": {
         "version": "6.3.0"
@@ -376,6 +382,9 @@
     },
     "symfony/polyfill-apcu": {
         "version": "v1.6.0"
+    },
+    "symfony/polyfill-ctype": {
+        "version": "v1.8.0"
     },
     "symfony/polyfill-intl-icu": {
         "version": "v1.6.0"

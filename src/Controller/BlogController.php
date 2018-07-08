@@ -17,15 +17,14 @@ use App\Events;
 use App\Form\CommentType;
 use App\Repository\PostRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used to manage blog contents in the public part of the site.
@@ -38,10 +37,9 @@ use Symfony\Component\HttpFoundation\Response;
 class BlogController extends AbstractController
 {
     /**
-     * @Route("/", defaults={"page": "1", "_format"="html"}, name="blog_index")
-     * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, name="blog_rss")
-     * @Route("/page/{page}", defaults={"_format"="html"}, requirements={"page": "[1-9]\d*"}, name="blog_index_paginated")
-     * @Method("GET")
+     * @Route("/", methods={"GET"}, defaults={"page": "1", "_format"="html"}, name="blog_index")
+     * @Route("/rss.xml", methods={"GET"}, defaults={"page": "1", "_format"="xml"}, name="blog_rss")
+     * @Route("/page/{page}", methods={"GET"}, defaults={"_format"="html"}, requirements={"page": "[1-9]\d*"}, name="blog_index_paginated")
      * @Cache(smaxage="10")
      *
      * NOTE: For standard formats, Symfony will also automatically choose the best
@@ -59,8 +57,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/posts/{slug}", name="blog_post")
-     * @Method("GET")
+     * @Route("/posts/{slug}", methods={"GET"}, name="blog_post")
      *
      * NOTE: The $post controller argument is automatically injected by Symfony
      * after performing a database query looking for a Post with the 'slug'
@@ -80,8 +77,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/comment/{postSlug}/new", name="comment_new")
-     * @Method("POST")
+     * @Route("/comment/{postSlug}/new", methods={"POST"}, name="comment_new")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @ParamConverter("post", options={"mapping": {"postSlug": "slug"}})
      *
@@ -145,8 +141,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/search", name="blog_search")
-     * @Method("GET")
+     * @Route("/search", methods={"GET"}, name="blog_search")
      */
     public function search(Request $request, PostRepository $posts): Response
     {
